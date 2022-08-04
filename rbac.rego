@@ -12,7 +12,7 @@ q := {
       "authenticated": input.user.authenticated
     },
     "resource": {
-      "id": input.resource.id,
+#      "id": input.resource.id,
       "type": input.resource.type,
       "tenant": input.resource.tenant
     }
@@ -36,13 +36,13 @@ tenant := tenant_id {
 	tenant_id := q.resource.tenant
 }
 
-tenant := tenant_id {
-	q.resource.tenant == null
-	q.resource.id != null
-	q.resource.type != null
-	data.resources[q.resource.type]
-	tenant_id := data.resources[q.resource.type][q.resource.id].tenant
-}
+#tenant := tenant_id {
+#	q.resource.tenant == null
+#	q.resource.id != null
+#	q.resource.type != null
+#	data.resources[q.resource.type]
+#	tenant_id := data.resources[q.resource.type][q.resource.id].tenant
+#}
 
 grants[grant] {
   some roleKey in data.users[q.user.id].roleAssignments[tenant]
