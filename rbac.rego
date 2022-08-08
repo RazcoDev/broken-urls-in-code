@@ -5,11 +5,11 @@ import future.keywords
 # Santizied query
 q := {
 	"action": {
-    	"id": input.actionId
+      "id": input.action.id,
     },
     "user": {
       "id": input.user.id,
-      "authenticated": input.user.authenticated
+      "authenticated": input.user.authenticated,
     },
     "resource": {
 #      "id": input.resource.id,
@@ -18,10 +18,10 @@ q := {
     }
 }
 
-# # By default, deny requests.
+# By default, deny requests.
 default allow := false
 
- # Allow the action if the user is granted permission to perform the action.
+# Allow the action if the user is granted permission to perform the action.
 allow  {
   # Find grants for the user.
   some grant in grants
