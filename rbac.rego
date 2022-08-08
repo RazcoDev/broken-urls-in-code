@@ -4,15 +4,12 @@ import future.keywords
 
 # Santizied query
 q := {
-	"action": {
-      "id": input.action.id,
-    },
+	"action": input.action,
     "user": {
-      "id": input.user.id,
-#      "authenticated": input.user.authenticated,
+      "key": input.user.key,
     },
     "resource": {
-#      "id": input.resource.id,
+#      "key": input.resource.key,
       "type": input.resource.type,
       "tenant": input.resource.tenant
     }
@@ -22,29 +19,28 @@ q := {
 default allow := false
 
 # Allow the action if the user is granted permission to perform the action.
-allow  {
+allow {
   # Find grants for the user.
   some grant in grants
 
-
   # Check if the grant permits the action.
-  q.action.id == grant
+  q.action == grant
 }
 
-tenant := tenant_id {
+tenant := tenant_key {
 	q.resource.tenant != null
-	tenant_id := q.resource.tenant
+	tenant_key := q.resource.tenant
 }
 
-#tenant := tenant_id {
+#tenant := tenant_key {
 #	q.resource.tenant == null
-#	q.resource.id != null
+#	q.resource.key != null
 #	q.resource.type != null
 #	data.resources[q.resource.type]
-#	tenant_id := data.resources[q.resource.type][q.resource.id].tenant
+#	tenant_key := data.resources[q.resource.type][q.resource.key].tenant
 #}
 
 grants[grant] {
-  some roleKey in data.users[q.user.id].roleAssignments[tenant]
+  some roleKey in data.users[q.user.key].roleAssignments[tenant]
   some grant in data.roles[roleKey].grants[q.resource.type]
 }
