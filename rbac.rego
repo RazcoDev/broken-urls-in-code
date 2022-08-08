@@ -9,7 +9,7 @@ q := {
     },
     "user": {
       "id": input.user.id,
-      "authenticated": input.user.authenticated,
+#      "authenticated": input.user.authenticated,
     },
     "resource": {
 #      "id": input.resource.id,
