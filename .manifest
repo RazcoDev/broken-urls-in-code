@@ -1,0 +1,5 @@
+abac.rego
+rbac.rego
+permit/root.rego
+custom/root.rego
+root.rego
