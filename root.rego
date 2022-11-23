@@ -1,36 +1,19 @@
 package permit.root
 
-import data.permit.rbac
-import data.permit.abac
+import data.permit.policies
+import data.permit.custom
 
 default allow := false
 
 allow {
-	rbac.allow
-}
-
-__allow_sources["rbac"] {
-	rbac.allow
+	policies.allow
+	# NOTE: you can add more conditions here to get an AND effect
+	# i.e: assume you added my_custom_rule here
+	# The policy will allow if BOTH policies.allow and my_custom_rule are true
 }
 
 allow {
-	abac.allow
+	custom.allow
 }
 
-__allow_sources["abac"] {
-	abac.allow
-}
-
-default __debug_input := null
-__debug_input = {
-	"action": input.action,
-	"user": input.user,
-	"resource": input.resource,
-}
-
-debug := {
-	"allow_source": __allow_sources,
-	"rbac": rbac.debug,
-	"abac": abac.debug,
-	"input": __debug_input,
-}
+debug = policies.debug
