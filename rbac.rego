@@ -5,14 +5,12 @@ import future.keywords
 # Santizied query
 input_query := {
 	"action": input.action,
-		"user": {
-			"key": input.user.key,
-		},
-		"resource": {
-#			"key": input.resource.key,
-			"type": input.resource.type,
-			"tenant": input.resource.tenant
-		}
+	"user": {"key": input.user.key},
+	"resource": {
+		#			"key": input.resource.key,
+		"type": input.resource.type,
+		"tenant": input.resource.tenant,
+	},
 }
 
 # By default, deny requests.
@@ -35,6 +33,7 @@ tenant := tenant_key {
 	input_query.resource.tenant != null
 	tenant_key := input_query.resource.tenant
 }
+
 #tenant := tenant_key {
 #	q.resource.tenant == null
 #	q.resource.key != null
@@ -52,11 +51,7 @@ grants[grant] {
 	some grant in data.roles[role_key].grants[input_query.resource.type]
 }
 
-default debug = null
-debug := {
-	"input_query": input_query,
-	"tenant": tenant,
-	"user_roles": user_roles,
-	"grants": grants,
-	"matching_grants": matching_grants,
+allowing_roles[role_key] {
+	some role_key in user_roles
+	input.action in data.roles[role_key].grants[input_query.resource.type]
 }
