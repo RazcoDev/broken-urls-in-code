@@ -1,5 +1,5 @@
 abac.rego
 rbac.rego
-permit/root.rego
+permit
 custom/root.rego
 root.rego
