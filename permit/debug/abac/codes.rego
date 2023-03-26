@@ -3,7 +3,7 @@ package permit.debug.abac
 import future.keywords.in
 
 import data.permit.debug.utils as debug_utils
-import data.permit.generated.abac.utils
+import data.permit.utils
 
 # please note !
 # this file uses parameters from different files with the same package name,

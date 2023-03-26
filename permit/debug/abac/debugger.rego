@@ -2,8 +2,6 @@ package permit.debug.abac
 
 import data.permit.abac
 import data.permit.conditionset
-import data.permit.debug.utils as debug_utils
-import data.permit.generated.abac.utils
 import future.keywords.in
 
 default details := null

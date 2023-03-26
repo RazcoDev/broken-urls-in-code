@@ -1,7 +1,8 @@
 package permit.debug.abac
 
 import data.permit.abac
-import data.permit.generated.abac.utils
+import data.permit.utils
+import data.permit.utils.abac as abac_utils
 import future.keywords.in
 
 # The purpose of those values is to forward abac policy package values to the debug package
@@ -41,7 +42,7 @@ __convert_resourceset_name_to_response(resourceset) = decoded_name {
 
 is_allowing_pair(userset, resourceset) {
 	# get the permissions in this couple of userset <> resourceset
-	permissions := utils.condition_set_permissions[userset][resourceset][input.resource.type]
+	permissions := abac_utils.condition_set_permissions[userset][resourceset][input.resource.type]
 
 	# check if the specified action is allowed in this couple of userset <> resourceset
 	input.action in permissions

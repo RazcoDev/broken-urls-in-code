@@ -1,8 +1,9 @@
 package permit.debug.rbac
 
 import data.permit.debug.utils as debug_utils
-import data.permit.generated.abac.utils
 import data.permit.rbac
+import data.permit.rbac_utils
+import data.permit.utils
 import future.keywords.in
 
 default details := null
@@ -33,7 +34,7 @@ details = details {
 	details := codes("no_user_roles")
 } else = details {
 	# if the user has no roles
-	count(utils.user_roles) == 0
+	count(rbac_utils.user_roles) == 0
 	details := codes("no_role_in_tenant")
 } else = details {
 	# if the user does not have the required permissions ( grants )
