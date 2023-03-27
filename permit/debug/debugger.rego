@@ -5,9 +5,10 @@ import future.keywords.in
 import data.permit.custom
 import data.permit.debug.abac
 import data.permit.debug.rbac
-import data.permit.generated.abac.utils
 import data.permit.policies
 import data.permit.root
+import data.permit.utils
+import data.permit.utils.abac as abac_utils
 
 default __debug_tenant = null
 
@@ -25,7 +26,7 @@ default __debug_user := null
 
 default __debug_user_attributes := {}
 
-__debug_user_attributes = utils.attributes.user
+__debug_user_attributes = abac_utils.attributes.user
 
 default __debug_user_synced := false
 
@@ -43,7 +44,7 @@ default __debug_resource := null
 
 __debug_resource = {
 	"type": input.resource.type,
-	"attributes": utils.attributes.resource,
+	"attributes": abac_utils.attributes.resource,
 }
 
 __debug_details["rbac"] = result {

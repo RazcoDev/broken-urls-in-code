@@ -2,8 +2,8 @@ package permit.abac
 
 import future.keywords.in
 
-import data.permit.generated.abac.utils
 import data.permit.generated.conditionset
+import data.permit.utils.abac as utils
 
 default allow := false
 

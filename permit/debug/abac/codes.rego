@@ -3,7 +3,7 @@ package permit.debug.abac
 import future.keywords.in
 
 import data.permit.debug.utils as debug_utils
-import data.permit.generated.abac.utils
+import data.permit.utils
 
 # please note !
 # this file uses parameters from different files with the same package name,
@@ -34,6 +34,10 @@ __codes("no_matching_rules") = {
 	),
 	"matching_usersets": matching_usersets,
 	"matching_resourcesets": matching_resourcesets,
+}
+
+__codes("cloud_pdp_not_supporting_abac") = {
+    "reason": "The Cloud PDP does not support ABAC policies at the moment, run the PDP container to enforce access with ABAC"
 }
 
 codes(code) = result {
