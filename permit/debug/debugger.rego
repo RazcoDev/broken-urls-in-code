@@ -32,7 +32,7 @@ default __debug_user_synced := false
 
 __debug_user_synced = utils.has_key(data.users, input.user.key)
 
-__debug_user = utils.merge_objects(
+__debug_user = object.union(
 	input.user,
 	{
 		"synced": __debug_user_synced,
@@ -87,7 +87,7 @@ __debug_details["custom"] = result {
 
 default debug := null
 
-debug = utils.merge_objects(
+debug = object.union(
 	{"request": {
 		"user": __debug_user,
 		"tenant": __debug_tenant,
