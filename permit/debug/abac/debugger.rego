@@ -7,10 +7,10 @@ import future.keywords.in
 default details := null
 
 details = details {
-    # if the request was made from a cloud pdp
-    input.context.pdp_type == "cloud"
-    count(data.condition_sets) > 0
-    details := codes("cloud_pdp_not_supporting_abac")
+	# if the request was made from a cloud pdp
+	input.context.pdp_type == "cloud"
+	count(data.condition_sets) > 0
+	details := codes("cloud_pdp_not_supporting_abac")
 } else = details {
 	# in case of rbac deny, return the denying roles
 	not activated

@@ -18,4 +18,26 @@ allow {
 	custom.allow
 }
 
-debug = debug.debug
+allowing_sources := policies.__allow_sources
+
+default __data_use_debugger := true
+
+__data_use_debugger = data.use_debugger
+
+default __input_use_debugger := null
+
+__input_use_debugger = input.use_debugger
+
+default debugger_activated := false
+
+debugger_activated {
+	__data_use_debugger == true
+	__input_use_debugger != false
+} else {
+	__input_use_debugger == true
+}
+
+debug = result {
+	debugger_activated
+	result := debug.debug
+}

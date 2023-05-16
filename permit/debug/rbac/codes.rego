@@ -60,7 +60,7 @@ __codes("no_permission") = {"reason": sprintf(
 
 codes(code) = result {
 	allow
-	result := utils.merge_objects(
+	result := object.union(
 		{
 			"allow": allow,
 			"code": code,
@@ -71,7 +71,7 @@ codes(code) = result {
 
 codes(code) = result {
 	not allow
-	result := utils.merge_objects(
+	result := object.union(
 		{
 			"allow": allow,
 			"code": code,
