@@ -60,25 +60,19 @@ __custom_context_attributes = data.permit.custom.custom_context_attributes
 #   stored - Attributes from Permit's database and backend
 #   generated - Atrributes generated in this file
 
-__user_attributes = utils.merge_objects(
-	utils.merge_objects(
-		utils.merge_objects(__generated_user_attributes, __stored_user_attributes),
-		__custom_user_attributes,
-	),
-	__input_user_attributes,
-)
+__user_attributes = object.union_n([
+	__generated_user_attributes, __stored_user_attributes,
+	__custom_user_attributes, __input_user_attributes,
+])
 
-__resource_attributes = utils.merge_objects(
-	utils.merge_objects(__generated_resource_attributes, __custom_resource_attributes),
-	__input_resource_attributes,
-)
+__resource_attributes = object.union_n([
+	__generated_resource_attributes,
+	__custom_resource_attributes, __input_resource_attributes,
+])
 
-__tenant_attributes = utils.merge_objects(
-	utils.merge_objects(__stored_tenant_attributes, __custom_tenant_attributes),
-	__input_tenant_attributes,
-)
+__tenant_attributes = object.union_n([__stored_tenant_attributes, __custom_tenant_attributes, __input_tenant_attributes])
 
-__context_attributes = utils.merge_objects(
+__context_attributes = object.union(
 	__custom_context_attributes,
 	__input_context_attributes,
 )
@@ -89,8 +83,8 @@ attributes = {
 	"tenant": __tenant_attributes,
 	"context": __context_attributes,
 	# TODO: When we want to add data from system, use these
-	#	"resource": utils.merge_objects(__input_resource_attributes, data.resource[input.resource.id].attributes),
-	#	"environment": utils.merge_objects(__input_context_environment, data.environment.attributes),
+	#	"resource": object.union(__input_resource_attributes, data.resource[input.resource.id].attributes),
+	#	"environment": object.union(__input_context_environment, data.environment.attributes),
 
 }
 
