@@ -36,13 +36,11 @@ __codes("no_matching_rules") = {
 	"matching_resourcesets": matching_resourcesets,
 }
 
-__codes("cloud_pdp_not_supporting_abac") = {
-    "reason": "The Cloud PDP does not support ABAC policies at the moment, run the PDP container to enforce access with ABAC"
-}
+__codes("cloud_pdp_not_supporting_abac") = {"reason": "The Cloud PDP does not support ABAC policies at the moment, run the PDP container to enforce access with ABAC"}
 
 codes(code) = result {
 	allow
-	result := utils.merge_objects(
+	result := object.union(
 		{
 			"allow": allow,
 			"code": code,
@@ -53,7 +51,7 @@ codes(code) = result {
 
 codes(code) = result {
 	not allow
-	result := utils.merge_objects(
+	result := object.union(
 		{
 			"allow": allow,
 			"code": code,

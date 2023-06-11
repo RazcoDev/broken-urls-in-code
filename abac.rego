@@ -8,12 +8,27 @@ import data.permit.utils.abac as utils
 default allow := false
 
 allow {
-	count(allowing_rules) > 0
+	some userset in matching_usersets
+	some resourceset in matching_resourcesets
+	is_allowing_pair(userset, resourceset)
 }
 
-allowing_rules[rule] {
-	some rule, value in conditionset.rules
-	value == true
+allowing_rules[pair] {
+	some userset in matching_usersets
+	some resourceset in matching_resourcesets
+	is_allowing_pair(userset, resourceset)
+	pair := {
+		"userset": userset,
+		"resourceset": resourceset,
+	}
+}
+
+is_allowing_pair(userset, resourceset) {
+	# get the permissions in this couple of userset <> resourceset
+	permissions := utils.condition_set_permissions[userset][resourceset][input.resource.type]
+
+	# check if the specified action is allowed in this couple of userset <> resourceset
+	input.action in permissions
 }
 
 decode_condition_set_key(key) = value {
@@ -34,14 +49,6 @@ matching_resourcesets[resourceset] {
 	startswith(set, "resourceset_")
 	value == true
 	resourceset := decode_condition_set_key(set)
-}
-
-userset_permissions[userset] := resourceset_permissions {
-	some userset in matching_usersets
-	resourceset_permissions := {resourceset: permissions |
-		some resourceset in matching_resourcesets
-		permissions := utils.condition_set_permissions[userset][resourceset]
-	}
 }
 
 usersets[set] {

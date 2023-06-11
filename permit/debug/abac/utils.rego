@@ -40,25 +40,15 @@ __convert_resourceset_name_to_response(resourceset) = decoded_name {
 	decoded_name := {"resourceset": resourceset}
 }
 
-is_allowing_pair(userset, resourceset) {
-	# get the permissions in this couple of userset <> resourceset
-	permissions := abac_utils.condition_set_permissions[userset][resourceset][input.resource.type]
-
-	# check if the specified action is allowed in this couple of userset <> resourceset
-	input.action in permissions
-}
-
 default allowing_rules := []
 
 allowing_rules = [
 # merge the userset and resourceset details
-utils.merge_objects(__convert_userset_name_to_response(userset), __convert_resourceset_name_to_response(resourceset)) |
-	# check that the couple of userset <> resourceset is granting the relevant permission
-	is_allowing_pair(userset, resourceset)
-
-	# iterate over all the matching usersets and resourcesets pairs
-	userset = abac.matching_usersets[i]
-	resourceset = abac.matching_resourcesets[j]
+object.union(
+	__convert_userset_name_to_response(pair.userset),
+	__convert_resourceset_name_to_response(pair.resourceset),
+) |
+	abac.allowing_rules[pair]
 ]
 
 format_reason_msg(allowing_rule) = msg {
