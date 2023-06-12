@@ -12,7 +12,12 @@ __rebac_data := {
 
 default rebac_roles := []
 
-rebac_roles_result := permit_rebac_roles(__rebac_data, input)
+rebac_roles_result := {
+  "roles": [],
+  "debugger": {
+    "error": "PDP does not support ReBAC"
+  }
+}
 
 rebac_roles := rebac_roles_result.roles
 
