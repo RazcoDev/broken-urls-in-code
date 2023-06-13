@@ -12,7 +12,12 @@ __rebac_data := {
 
 default rebac_roles := []
 
-rebac_roles_result := permit_rebac_roles(__rebac_data, input)
+rebac_roles_result := {
+  "roles": [],
+  "debugger": {
+    "error": "Connected PDPs do not not support ReBAC, try to update your pdp version"
+  }
+}
 
 rebac_roles := rebac_roles_result.roles
 
