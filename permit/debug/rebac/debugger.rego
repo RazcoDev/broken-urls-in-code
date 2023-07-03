@@ -1,9 +1,8 @@
-package permit.debug.rbac
+package permit.debug.rebac
 
 import data.permit.debug.utils as debug_utils
-import data.permit.rbac
+import data.permit.rebac
 import data.permit.utils
-import data.permit.utils.rbac as rbac_utils
 import future.keywords.in
 
 default details := null
@@ -29,13 +28,9 @@ details = details {
 	not utils.has_key(data.users, input.user.key)
 	details := codes("user_not_synced")
 } else = details {
-	# if the user is not associated with the tenant
-	count(tenants_with_roles) == 0
-	details := codes("no_user_roles")
-} else = details {
 	# if the user has no roles
-	count(rbac_utils.user_roles) == 0
-	details := codes("no_role_in_tenant")
+	count(rebac.user_roles) == 0
+	details := codes("no_graph_roles")
 } else = details {
 	# if the user does not have the required permissions ( grants )
 	details := codes("no_permission")
