@@ -46,16 +46,12 @@ user_roles[role_key] {
 	some role_key in data.users[input_query.user.key].roleAssignments[tenant]
 }
 
-default roles_resource := "__tenant"
-
-roles_resource := data.roles_resource
-
 grants[grant] {
 	some role_key in user_roles
-	some grant in data.role_permissions[roles_resource][role_key].grants[input_query.resource.type]
+	some grant in data.roles[role_key].grants[input_query.resource.type]
 }
 
 allowing_roles[role_key] {
 	some role_key in user_roles
-	input.action in data.role_permissions[roles_resource][role_key].grants[input_query.resource.type]
+	input.action in data.roles[role_key].grants[input_query.resource.type]
 }
