@@ -2,8 +2,8 @@ package permit.debug.rbac
 
 import data.permit.debug.utils as debug_utils
 import data.permit.rbac
+import data.permit.rbac_utils
 import data.permit.utils
-import data.permit.utils.rbac as rbac_utils
 import future.keywords.in
 
 default details := null
