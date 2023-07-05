@@ -5,6 +5,7 @@ import future.keywords.in
 import data.permit.custom
 import data.permit.debug.abac
 import data.permit.debug.rbac
+import data.permit.debug.rebac
 import data.permit.policies
 import data.permit.root
 import data.permit.utils
@@ -74,6 +75,21 @@ __debug_details["abac"] = result {
 	abac.activated
 	not abac.allow
 	result := abac.details
+}
+
+__debug_details["rebac"] = result {
+	rebac.allow
+	result := rebac.details
+}
+
+__debug_details["rebac"] = result {
+	# show rebac deny debug only if no other model allowed the request and rebac is activated
+	not rbac.allow
+	not custom.allow
+	not abac.allow
+	rebac.activated
+	not rebac.allow
+	result := rebac.details
 }
 
 __debug_details["custom"] = result {
