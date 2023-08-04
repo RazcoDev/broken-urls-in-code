@@ -2,11 +2,15 @@ name: 'Broken URLs in Code'
 description: 'Scan for broken URLs in your code'
 author: 'RazCodev @ Permit.io'
 inputs:
-  files-rgex:
+  directory:
+    required: true
+    description: 'Directory to scan'
+    default: '.'
+  files-globe:
     required: true
     description: 'Regex to match files to scan'
     default: '**/*'
-  urls-regex:
+  url-regex:
     required: true
     description: 'Regex to match URLs to scan'
     default: 'https?://[^\\s/$.?#].[^\\s]*'

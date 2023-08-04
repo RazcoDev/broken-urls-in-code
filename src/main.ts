@@ -7,6 +7,8 @@ async function run(): Promise<void> {
     const filesGlobe: string = core.getInput('files-globe')
     const directory: string = core.getInput('directory')
     const urlRegex = RegExp(core.getInput('url-regex'))
+    core.info(`URL regex: ${urlRegex}`)
+    core.info(`Files globe: ${filesGlobe}`)
     core.info(
       `Scanning broken URLs in files matching the input regex: "${filesGlobe}" `
     )
