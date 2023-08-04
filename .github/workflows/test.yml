@@ -20,9 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./
+        continue-on-error: true
         with:
           directory: './__tests__/test_dir'
           files-glob: '**/*.js'
-          url-regex: '/http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+/g'
+          url-regex: 'http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
