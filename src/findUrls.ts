@@ -3,7 +3,7 @@ import * as path from 'path'
 import {glob} from 'glob'
 import * as core from '@actions/core'
 export async function findUrlsInFiles(
-  // directory: string,
+  directory: string,
   urlRegex: RegExp,
   filesGlob: string
 ): Promise<string[]> {

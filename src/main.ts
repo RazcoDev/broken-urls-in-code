@@ -5,14 +5,14 @@ import {checkUrls} from './checkUrls'
 async function run(): Promise<void> {
   try {
     const filesGlobe: string = core.getInput('files-globe')
-    // const directory: string = core.getInput('directory')
+    const directory: string = core.getInput('directory')
     const urlRegex = RegExp(core.getInput('url-regex'))
     core.info(
       `Scanning broken URLs in files matching the input regex: "${filesGlobe}" `
     )
 
     const urlsArray: string[] = await findUrlsInFiles(
-      // directory,
+      directory || '.',
       urlRegex,
       filesGlobe
     )
