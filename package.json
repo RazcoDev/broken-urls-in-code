@@ -28,7 +28,8 @@
     "@actions/core": "^1.10.0",
     "extract-urls": "^1.3.4",
     "get-urls": "^12.0.0",
-    "glob": "^10.3.3"
+    "glob": "^10.3.3",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
