@@ -24,7 +24,7 @@ $ npm test
 
 ```yaml
 - name: Check broken URLs
-  uses: RazcoDev/broken-urls-in-code@v1
+  uses: RazcoDev/broken-urls-in-code@v1.0.1
   with:
     # The directory you want to check
     directory: '.'
