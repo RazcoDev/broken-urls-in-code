@@ -177,13 +177,13 @@ const checkUrls_1 = __nccwpck_require__(1754);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const filesGlobe = core.getInput('files-globe');
+            const filesGlob = core.getInput('files-glob');
             const directory = core.getInput('directory');
             const urlRegex = RegExp(core.getInput('url-regex'), 'gi');
-            core.info(`Scanning broken URLs in files matching the input regex: "${filesGlobe}" `);
+            core.info(`Scanning broken URLs in files matching the input regex: "${filesGlob}" `);
             core.info(`Using URL regex: ${urlRegex}`);
             core.info(`In directory: ${directory}`);
-            const urlsArray = yield (0, findUrls_1.findUrlsInFiles)(directory || '.', urlRegex, filesGlobe);
+            const urlsArray = yield (0, findUrls_1.findUrlsInFiles)(directory || '.', urlRegex, filesGlob);
             core.info(`Found ${urlsArray.length} URLs`);
             core.debug(`URLs: ${urlsArray.join(', ')}`);
             const checkResults = yield (0, checkUrls_1.checkUrls)(urlsArray);

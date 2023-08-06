@@ -4,18 +4,18 @@ import {checkUrls} from './checkUrls'
 
 async function run(): Promise<void> {
   try {
-    const filesGlobe: string = core.getInput('files-globe')
+    const filesGlob: string = core.getInput('files-glob')
     const directory: string = core.getInput('directory')
     const urlRegex = RegExp(core.getInput('url-regex'), 'gi')
     core.info(
-      `Scanning broken URLs in files matching the input regex: "${filesGlobe}" `
+      `Scanning broken URLs in files matching the input regex: "${filesGlob}" `
     )
     core.info(`Using URL regex: ${urlRegex}`)
     core.info(`In directory: ${directory}`)
     const urlsArray: string[] = await findUrlsInFiles(
       directory || '.',
       urlRegex,
-      filesGlobe
+      filesGlob
     )
     core.info(`Found ${urlsArray.length} URLs`)
     core.debug(`URLs: ${urlsArray.join(', ')}`)
