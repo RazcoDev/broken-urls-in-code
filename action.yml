@@ -1,11 +1,19 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Broken URLs in Code'
+description: 'Scan for broken URLs in your code'
+author: 'RazCodev @ Permit.io'
 inputs:
-  milliseconds: # change this
+  directory:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Directory to scan'
+    default: '.'
+  files-globe:
+    required: true
+    description: 'Regex to match files to scan'
+    default: '**/*'
+  url-regex:
+    required: true
+    description: 'Regex to match URLs to scan'
+    default: 'https?://[^\\s/$.?#].[^\\s]*'
 runs:
   using: 'node16'
   main: 'dist/index.js'
