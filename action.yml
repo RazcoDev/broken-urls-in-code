@@ -6,7 +6,7 @@ inputs:
     required: true
     description: 'Directory to scan'
     default: '.'
-  files-globe:
+  files-glob:
     required: true
     description: 'Regex to match files to scan'
     default: '**/*'
