@@ -1,3 +1,5 @@
+import fetch from 'node-fetch'
+
 interface UrlCheckResult {
   url: string
   status: number
