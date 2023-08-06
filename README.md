@@ -9,19 +9,19 @@ This action will check all URLs in your code and report broken ones. Simple as t
 
 
 ## Build
-___
+
 ```bash
 $ npm run build && npm run package
 ```
 
 ## Test
-___
+
 ```bash
 $ npm test
 ```
 
 ## Action Usage
-___
+
 ```yaml
 - name: Check broken URLs
   uses: RazcoDev/broken-urls-in-code@v1
@@ -36,7 +36,7 @@ ___
 
 
 ## Inputs
-___
+
 ### `directory`
 
 **Required** The directory you want to check. Default `.`.
@@ -50,14 +50,14 @@ ___
 **Required** The URLs regex to check. Default `http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+`.
 
 ## Outputs
-___
+
 ### `broken-urls`
 
 The broken URLs found in the code.
 
 
 # License
-___
+
 Apache-2.0 License
 
 Authors: [Raz Cohen](https://github.com/RazcoDev)
