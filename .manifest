@@ -5,3 +5,5 @@ rbac.rego
 permit
 custom/root.rego
 root.rego
+bulk.rego
+any_tenant.rego
