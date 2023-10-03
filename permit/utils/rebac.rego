@@ -6,19 +6,22 @@ user := sprintf("user:%s", [input.user.key])
 
 user_assignments := data.role_assignments[user]
 
-__input_tenants := results {
-	results := object.get(input, "tenants", [])
-	is_array(results)
-}
+__input_tenants := object.get(input, "tenants", null)
 
 __input_resources := object.get(input, "resources", null)
 
 _input_resources := results {
 	is_null(__input_resources)
-	results := __input_tenants
+	is_null(__input_tenants)
+	results := null
 } else {
 	not is_null(__input_resources)
-	results := array.concat(__input_tenants, __input_resources)
+	is_null(__input_tenants)
+	results := __input_resources
+} else {
+	is_null(__input_resources)
+	not is_null(__input_tenants)
+	results := __input_tenants
 } else {
 	results := __input_resources
 }
