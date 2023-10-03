@@ -3,6 +3,8 @@ package permit.user_permissions
 import data.permit.utils.rebac as rebac_utils
 import future.keywords.in
 
+default __rebac_roles := {}
+
 default permissions := {}
 
 permissions := result {
@@ -50,7 +52,7 @@ _rebac_permissions[resource] := rebac_utils.build_permissions_object(
 	object.get(resource_obj, "attributes", {}),
 	permissions,
 ) {
-	rebac_all_roles := permit_rebac.all_roles(input)
+	rebac_all_roles := __rebac_roles
 	some resource, roles in rebac_all_roles
 	resource_obj := object.get(data.resource_instances, resource, {})
 	resource_details := rebac_utils.split_resource_to_parts(resource)
