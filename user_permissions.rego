@@ -1,59 +1,64 @@
 package permit.user_permissions
 
+import data.permit.utils.rebac as rebac_utils
 import future.keywords.in
 
-default permissions := []
-
-__user := sprintf("user:%s", [input.user.key])
-
-user_assignments := data.role_assignments[__user]
+default permissions := {}
 
 permissions := result {
-	result := object.union_n([rbac_permissions])
+	result := object.union_n([
+		rbac_permissions,
+		rebac_permissions,
+	])
 }
 
-is_filtered_tenant(tenant) {
-	is_array(input.tenants)
-	tenant in input.tenants
-} else {
-	input_tenants = object.get(input, "tenants", null)
-	not is_array(input_tenants)
-}
+default rbac_permissions := {}
 
-default rbac_permissions := set()
+rbac_permissions := object.union_n([v | v := _rbac_permissions[_]])
 
-__rbac_permissions[tenant_permissions] {
-	# iterate user assignments
-	some assigned_object, role_assignments in user_assignments
+default rebac_permissions := {}
 
-	# filter for tenant roles
+rebac_permissions := object.union_n([v | v := _rebac_permissions[_]])
+
+_rbac_permissions[object_permissions] {
+	some assigned_object, _ in rebac_utils.user_assignments
 	startswith(assigned_object, "__tenant:")
-	tenant_key := split(assigned_object, ":")[1]
-	is_filtered_tenant(tenant_key)
+	object_permissions := __rbac_permissions[assigned_object]
+}
+
+__rbac_permissions[assigned_object] := rebac_utils.build_permissions_object(
+	"tenant",
+	"__tenant",
+	tenant_key,
+	object.get(tenant_obj, "attributes", {}),
+	permissions,
+) {
+	tenant_details := rebac_utils.split_resource_to_parts(assigned_object)
+	tenant_key := tenant_details.resource_instance
+	rebac_utils.is_filtered_resource(tenant_details)
 	tenant_obj := data.tenants[tenant_key]
+	role_assignments := rebac_utils.user_assignments[assigned_object]
 
 	# iterate role assignments
-	permissions := {sprintf("%s:%s", [resource, permission]) |
-		# iterate role assignments
-		role := role_assignments[_]
-
-		# extract role permission grants
-		role_permissions_map := data.role_permissions.__tenant[role].grants
-
-		# iterate role permissions grants on each resource
-		resource_permissions := role_permissions_map[resource]
-
-		# extract permission grants
-		permission := resource_permissions[_]
-	}
-
-	tenant_permissions := {tenant_key: object.union(
-		{"tenant": {
-			"key": tenant_key,
-			"attributes": tenant_obj.attributes,
-		}},
-		{"permissions": permissions},
-	)}
+	permissions := rebac_utils.roles_permissions(role_assignments, tenant_details)
 }
 
-rbac_permissions := object.union_n([v | v := __rbac_permissions[_]])
+_rebac_permissions[resource] := rebac_utils.build_permissions_object(
+	"resource",
+	resource_details.resource_type,
+	resource_details.resource_instance,
+	object.get(resource_obj, "attributes", {}),
+	permissions,
+) {
+	rebac_all_roles := permit_rebac.all_roles(input)
+	some resource, roles in rebac_all_roles
+	resource_obj := object.get(data.resource_instances, resource, {})
+	resource_details := rebac_utils.split_resource_to_parts(resource)
+	rebac_utils.is_filtered_resource(resource_details)
+	stripped_roles := [stripped_role |
+		role := roles[_]
+		stripped_role := rebac_utils.split_resource_role_to_parts(role).role
+	]
+
+	permissions := rebac_utils.roles_permissions(stripped_roles, resource_details)
+}

@@ -22,6 +22,10 @@ __stored_tenant_attributes = result {
 	result := data.tenants[input.resource.tenant].attributes
 }
 
+default __stored_resource_attributes = {}
+
+__stored_resource_attributes = data.resource_instances[sprintf("%s:%s", [input.resource.type, input.resource.key])].attributes
+
 default __input_user_attributes = {}
 
 default __input_resource_attributes = {}
@@ -66,7 +70,7 @@ __user_attributes = object.union_n([
 ])
 
 __resource_attributes = object.union_n([
-	__generated_resource_attributes,
+	__generated_resource_attributes, __stored_resource_attributes,
 	__custom_resource_attributes, __input_resource_attributes,
 ])
 

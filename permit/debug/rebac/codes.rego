@@ -14,8 +14,10 @@ __codes("allow") = {
 	"allowing_roles": allowing_roles,
 	"reason": sprintf(
 		"user '%s' has the '%s' permission on resource '%s' in tenant '%s', %s",
-		[input.user.key, input.action, object.get({"allowing_roles":allowing_roles},["allowing_roles",0,"resource"],""),
-        		input.resource.tenant, object.get({"allowing_roles":allowing_roles},["allowing_roles",0,"reason"],"")],
+		[
+			input.user.key, input.action, object.get({"allowing_roles": allowing_roles}, ["allowing_roles", 0, "resource"], ""),
+			input.resource.tenant, object.get({"allowing_roles": allowing_roles}, ["allowing_roles", 0, "reason"], ""),
+		],
 	),
 }
 
