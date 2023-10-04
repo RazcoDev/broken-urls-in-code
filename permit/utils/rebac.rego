@@ -77,14 +77,16 @@ is_filtered_resource(resource) {
 	is_filtered_resource_type(resource)
 }
 
-build_permissions_object(resource_object_key, resource_type, resource_key, resource_attributes, resource_permissions) := {resource_key: {
-	resource_object_key: {
-		"key": resource_key,
-		"type": resource_type,
-		"attributes": resource_attributes,
-	},
-	"permissions": resource_permissions,
-}}
+build_permissions_object(resource_object_key, resource_type, resource_key, resource_attributes, resource_permissions) := {
+    sprintf("%s:%s",[resource_type,resource_key]): {
+        resource_object_key: {
+            "key": resource_key,
+            "type": resource_type,
+            "attributes": resource_attributes,
+        },
+        "permissions": resource_permissions,
+    }
+}
 
 roles_permissions(role_assignments, resource_details) := {sprintf("%s:%s", [resource, permission]) |
 	# iterate role assignments
