@@ -25,8 +25,14 @@ _associated_tenants[tenant_key] := tenant {
 	some tenant_key, tenant in data.tenants
 }
 
+default using_optimized_policy := false
+
+using_optimized_policy {
+	input.context.optimized
+}
+
 allowed_tenants[allowed_tenant] {
-	not input.context.optimized
+	not using_optimized_policy
 	some tenant_key
 	tenant := _associated_tenants[tenant_key]
 	result := root with input.resource.tenant as tenant_key
@@ -40,7 +46,7 @@ allowed_tenants[allowed_tenant] {
 
 # optimized version
 allowed_tenants[allowed_tenant] {
-	input.context.optimized
+	using_optimized_policy
 	some tenant_key
 	tenant := _associated_tenants[tenant_key]
 	some role in data.users[input.user.key].roleAssignments[tenant_key]
