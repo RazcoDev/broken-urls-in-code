@@ -9,8 +9,6 @@ is_synced_user {
 	data.users[input.user.key]
 }
 
-default _associated_tenants := {}
-
 _associated_tenants[tenant_key] := tenant {
 	is_synced_user
 	user_assignments := data.role_assignments[sprintf("user:%s", [input.user.key])]
